@@ -10,7 +10,7 @@ INSTRUCTIONS:
 
 3 - One at time,the person will attack other character from rival team;
 
-4 - Wait 4 seconds after your team's character played;
+4 - Wait 4 seconds after your team's character played; (Be patient)
 
 5 - After everyone on a team has played, the turn will pass to the opposing team;
 
