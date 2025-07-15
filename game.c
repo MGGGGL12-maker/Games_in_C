@@ -8,7 +8,7 @@
 typedef struct
 {
     int id_player;
-    char name[30];
+    char name[31];
     float defense;
     float attack;
     float life;
@@ -43,15 +43,9 @@ void initialize_team(player* player, int ids_init, int ids_end, char team[], int
         scanf("%s", player[i].name);
         getchar();
 
-        player[i].defense = rand()%11;
+        player[i].defense = (rand()%10) + 1;
 
-        player[i].attack = rand()%11;
-
-        while (player[i].attack == 0 || player[i].defense == 0){
-            player[i].defense = rand()%11;
-
-            player[i].attack = rand()%11;
-        }
+        player[i].attack = (rand()%10) + 1;
         
         player[i].life = 100;
 
@@ -129,7 +123,7 @@ void death_func(player* player, int id_pla, int* deaths, int team)
 
 // Função que realiza o sistema de combat
 void combat_system(int* time_team, int qtd, player* red_team, player* blue_team, int choice, int* blue_deaths, int* red_deaths)
-{   
+{
     if (*time_team == 0)
     {
         for (int c = 0; c < qtd; c++)
@@ -164,12 +158,13 @@ void combat_system(int* time_team, int qtd, player* red_team, player* blue_team,
                 printf("\033[1;33m==============================\033[m\n\n\n");
     
                 printf("Escolha o ID do jogador que você deseja atacar: ");
-                scanf("%i", &choice);
+                int scanf_bool = scanf("%i", &choice);
                 getchar();
     
-                while (choice < 0 || choice > 3){
+                while (choice < 0 || choice > 3 || scanf_bool == 0){
                     printf("\nDADO INVÁLIDO!!! Digite um ID válido: ");
-                    scanf("%i", &choice);
+                    scanf_bool = scanf("%i", &choice);
+                    getchar();
                 }
     
                 while (blue_team[choice].died == 1)
@@ -231,12 +226,13 @@ void combat_system(int* time_team, int qtd, player* red_team, player* blue_team,
                 printf("\033[1;33m==============================\033[m\n\n\n");
     
                 printf("Escolha o ID do jogador que você deseja atacar: ");
-                scanf("%i", &choice);
+                int scanf_bool = scanf("%i", &choice);
                 getchar();
     
-                while (choice < 0 || choice > 3){
+                while (choice < 0 || choice > 3 || scanf_bool == 0){
                     printf("\nDADO INVÁLIDO!!! Digite um ID válido: ");
-                    scanf("%i", &choice);
+                    scanf_bool = scanf("%i", &choice);
+                    getchar();
                 }
     
                 while (red_team[choice].died == 1)
@@ -268,6 +264,7 @@ void combat_system(int* time_team, int qtd, player* red_team, player* blue_team,
 }
 
 
+// Função Principal
 int main(void)
 {
     // Variáveis auxiliares
