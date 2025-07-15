@@ -6,7 +6,7 @@ INSTRUCTIONS:
 
 1 - 8 players and 2 teams;
 
-2 - The name of charactres must a 30 chars with no spaces;
+2 - Character names must be 30 characters long;
 
 3 - One at time,the person will attack other character from rival team;
 
