@@ -131,10 +131,15 @@ void death_func(player* player, int id_pla, int* deaths, int team)
 void combat_system(int* time_team, int qtd, player* red_team, player* blue_team, int choice, int* blue_deaths, int* red_deaths)
 {   
     if (*time_team == 0)
+    {
+        for (int c = 0; c < qtd; c++)
         {
-            for (int c = 0; c < qtd; c++)
+            if (red_team[c].died == 0)
             {
                 printf("======================\n");
+                printf("\033[1;36m   TIME TEAM: RED   \033[m\n");
+
+                printf("======================\n\n");
                 printf("TEAM: \033[1;31mRED\033[m\n");
                 printf("ID: %i\n", red_team[c].id_player);
                 printf("WARRIOR NAME: %s\n", red_team[c].name);
@@ -142,7 +147,7 @@ void combat_system(int* time_team, int qtd, player* red_team, player* blue_team,
                 printf("ATTACK: %.2f\n", red_team[c].attack);
                 printf("DEFENSE: %.2f\n", red_team[c].defense);
                 printf("======================\n\n\n\n");
-
+    
                 printf("\033[1;33m==============================\033[m\n");
                 for (int i = 0; i < qtd; i++)
                 {
@@ -152,50 +157,56 @@ void combat_system(int* time_team, int qtd, player* red_team, player* blue_team,
                     printf("LIFE: %.2f\n\n", blue_team[i].life);
                 }
                 printf("\033[1;33m==============================\033[m\n\n\n");
-
+    
                 printf("\033[1;33m==============================\033[m\n");
                 printf("\033[1;36mRed Deaths: %i\n", *red_deaths);
                 printf("\033[1;36mBlue Deaths: %i\n", *blue_deaths);
                 printf("\033[1;33m==============================\033[m\n\n\n");
-
+    
                 printf("Escolha o ID do jogador que você deseja atacar: ");
                 scanf("%i", &choice);
                 getchar();
-
+    
                 while (choice < 0 || choice > 3){
                     printf("\nDADO INVÁLIDO!!! Digite um ID válido: ");
                     scanf("%i", &choice);
                 }
-
+    
                 while (blue_team[choice].died == 1)
                 {
                     printf("\nO lutador(a) %s já está morto(a)!!! Digite outro ID: ", blue_team[choice].name);
                     scanf("%i", &choice);
                 }
-
+    
                 sleep(1);
-
+    
                 attack_func(red_team, blue_team, c, choice);
                 death_func(blue_team, choice, blue_deaths, 1);
-
+    
                 if (*blue_deaths == 4)
                 {
                     break;
                     sleep(4);
                     system("clear");
                 }
-
+    
                 sleep(4);
                 system("clear");
             }
-
-            *time_team = 1;
         }
-        else if (*time_team == 1)
+
+        *time_team = 1;
+    }
+    else if (*time_team == 1)
+    {
+        for (int c = 0; c < qtd; c++)
         {
-            for (int c = 0; c < qtd; c++)
+            if (blue_team[c].died == 0)
             {
                 printf("======================\n");
+                printf("\033[1;36m   TIME TEAM: BLUE   \033[m\n");
+
+                printf("======================\n\n");
                 printf("TEAM: \033[1;34mBLUE\033[m\n");
                 printf("ID: %i\n", blue_team[c].id_player);
                 printf("WARRIOR NAME: %s\n", blue_team[c].name);
@@ -203,7 +214,7 @@ void combat_system(int* time_team, int qtd, player* red_team, player* blue_team,
                 printf("ATTACK: %.2f\n", blue_team[c].attack);
                 printf("DEFENSE: %.2f\n", blue_team[c].defense);
                 printf("======================\n\n\n\n");
-
+    
                 printf("\033[1;33m==============================\033[m\n");
                 for (int i = 0; i < qtd; i++)
                 {
@@ -213,45 +224,47 @@ void combat_system(int* time_team, int qtd, player* red_team, player* blue_team,
                     printf("LIFE: %.2f\n\n", red_team[i].life);
                 }
                 printf("\033[1;33m==============================\033[m\n\n");
-
+    
                 printf("\033[1;33m==============================\033[m\n");
                 printf("\033[1;36mRed Deaths: %i\n", *red_deaths);
                 printf("\033[1;36mBlue Deaths: %i\n", *blue_deaths);
                 printf("\033[1;33m==============================\033[m\n\n\n");
-
+    
                 printf("Escolha o ID do jogador que você deseja atacar: ");
                 scanf("%i", &choice);
                 getchar();
-
+    
                 while (choice < 0 || choice > 3){
                     printf("\nDADO INVÁLIDO!!! Digite um ID válido: ");
                     scanf("%i", &choice);
                 }
-
+    
                 while (red_team[choice].died == 1)
                 {
                     printf("\nO lutador(a) %s já está morto(a)!!! Digite outro ID: ", red_team[choice].name);
                     scanf("%i", &choice);
                 }
-
+    
                 sleep(1);
-
+    
                 attack_func(blue_team, red_team, c, choice);
                 death_func(red_team, choice, red_deaths, 0);
-
+    
                 if (*red_deaths == 4)
                 {
                     break;
                     sleep(4);
                     system("clear");
                 }
-
+    
                 sleep(4);
                 system("clear");
-            }
 
-            *time_team = 0;
+            }
         }
+
+        *time_team = 0;
+    }
 }
 
 
@@ -295,6 +308,14 @@ int main(void)
     printf("\033[1;33m==============================\033[m\n");
     printf("\033[1;36mRed Deaths: %i\n", red_deaths);
     printf("\033[1;36mBlue Deaths: %i\n", blue_deaths);
+    if (red_deaths == 4)
+    {
+        printf("\n\033[1;35mBLUE TEAM GANHOU A PARTIDA!!!!\033[m\n");
+    }
+    else if (blue_deaths == 4)
+    {
+        printf("\n\033[1;35mRED TEAM GANHOU A PARTIDA!!!!\033[m\n");
+    }
     printf("\033[1;33m==============================\033[m\n");
     
     return 0;
